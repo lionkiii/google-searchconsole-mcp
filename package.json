@@ -1,0 +1,51 @@
+{
+  "name": "google-searchconsole-mcp",
+  "version": "1.0.0",
+  "description": "MCP server for Google Search Console - query search analytics, inspect URLs, analyze keywords, and more",
+  "main": "dist/index.js",
+  "type": "module",
+  "bin": {
+    "google-searchconsole-mcp": "dist/index.js",
+    "gsc-mcp-auth": "dist/authenticate.js"
+  },
+  "files": [
+    "dist/",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "dev": "tsc && node dist/index.js",
+    "auth": "node dist/authenticate.js",
+    "prepublishOnly": "npm run build"
+  },
+  "keywords": [
+    "mcp",
+    "model-context-protocol",
+    "claude",
+    "google-search-console",
+    "gsc",
+    "seo",
+    "search-analytics",
+    "webmaster-tools"
+  ],
+  "license": "MIT",
+  "author": "aashish",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/aashish/gsc-mcp-server"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.0.0",
+    "googleapis": "^144.0.0",
+    "open": "^10.1.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "typescript": "^5.7.0"
+  }
+}
