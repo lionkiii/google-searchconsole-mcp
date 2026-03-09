@@ -23,6 +23,13 @@ import {
   SearchAppearanceType,
 } from "./tools/search-analytics.js";
 
+const readOnlyAnnotations = {
+  readOnlyHint: true,
+  destructiveHint: false,
+  idempotentHint: true,
+  openWorldHint: true,
+};
+
 const accountProperty = {
   type: "string" as const,
   description:
@@ -49,6 +56,7 @@ server.setRequestHandler(ListToolsRequestSchema, async () => {
         name: "list_accounts",
         description:
           "List all authenticated Google accounts and their associated GSC sites.",
+        annotations: readOnlyAnnotations,
         inputSchema: {
           type: "object",
           properties: {},
@@ -59,6 +67,7 @@ server.setRequestHandler(ListToolsRequestSchema, async () => {
         name: "list_sites",
         description:
           "List all sites you have access to in Google Search Console. When multiple accounts exist and no account is specified, shows all accounts' sites grouped by account.",
+        annotations: readOnlyAnnotations,
         inputSchema: {
           type: "object",
           properties: {
@@ -71,6 +80,7 @@ server.setRequestHandler(ListToolsRequestSchema, async () => {
         name: "query_search_analytics",
         description:
           "Query Google Search Console search analytics data. Returns search queries, clicks, impressions, CTR, and average position.",
+        annotations: readOnlyAnnotations,
         inputSchema: {
           type: "object",
           properties: {
@@ -120,6 +130,7 @@ server.setRequestHandler(ListToolsRequestSchema, async () => {
         name: "inspect_url",
         description:
           "Inspect a URL to check its indexing status, mobile usability, and rich results. Shows if Google can crawl and index the page.",
+        annotations: readOnlyAnnotations,
         inputSchema: {
           type: "object",
           properties: {
@@ -139,6 +150,7 @@ server.setRequestHandler(ListToolsRequestSchema, async () => {
       {
         name: "list_sitemaps",
         description: "List all sitemaps submitted for a site in Google Search Console.",
+        annotations: readOnlyAnnotations,
         inputSchema: {
           type: "object",
           properties: {
@@ -155,6 +167,7 @@ server.setRequestHandler(ListToolsRequestSchema, async () => {
         name: "find_keyword_opportunities",
         description:
           "Find keyword optimization opportunities - queries with high impressions but low CTR that could be improved.",
+        annotations: readOnlyAnnotations,
         inputSchema: {
           type: "object",
           properties: {
@@ -190,6 +203,7 @@ server.setRequestHandler(ListToolsRequestSchema, async () => {
       {
         name: "get_top_pages",
         description: "Get top performing pages sorted by clicks, impressions, CTR, or position.",
+        annotations: readOnlyAnnotations,
         inputSchema: {
           type: "object",
           properties: {
@@ -223,6 +237,7 @@ server.setRequestHandler(ListToolsRequestSchema, async () => {
         name: "compare_performance",
         description:
           "Compare search performance between two time periods. Shows which queries/pages gained or lost traffic.",
+        annotations: readOnlyAnnotations,
         inputSchema: {
           type: "object",
           properties: {
@@ -264,6 +279,7 @@ server.setRequestHandler(ListToolsRequestSchema, async () => {
         name: "analyze_brand_queries",
         description:
           "Analyze branded vs non-branded search queries. Shows what percentage of traffic comes from brand searches.",
+        annotations: readOnlyAnnotations,
         inputSchema: {
           type: "object",
           properties: {
@@ -293,6 +309,7 @@ server.setRequestHandler(ListToolsRequestSchema, async () => {
         name: "get_keyword_trend",
         description:
           "Get the performance trend of a specific keyword over time. Shows daily clicks, impressions, and position changes.",
+        annotations: readOnlyAnnotations,
         inputSchema: {
           type: "object",
           properties: {
@@ -321,6 +338,7 @@ server.setRequestHandler(ListToolsRequestSchema, async () => {
         name: "export_analytics",
         description:
           "Export search analytics data as CSV or JSON format for external analysis or reporting.",
+        annotations: readOnlyAnnotations,
         inputSchema: {
           type: "object",
           properties: {
@@ -364,6 +382,7 @@ server.setRequestHandler(ListToolsRequestSchema, async () => {
         name: "query_by_search_appearance",
         description:
           "Query analytics filtered by search appearance type (AMP, Rich Results, Video, FAQ, etc.).",
+        annotations: readOnlyAnnotations,
         inputSchema: {
           type: "object",
           properties: {
@@ -414,6 +433,7 @@ server.setRequestHandler(ListToolsRequestSchema, async () => {
         name: "query_by_search_type",
         description:
           "Query analytics filtered by search type: web, image, video, news, or discover.",
+        annotations: readOnlyAnnotations,
         inputSchema: {
           type: "object",
           properties: {

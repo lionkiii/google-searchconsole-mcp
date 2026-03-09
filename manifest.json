@@ -1,0 +1,84 @@
+{
+  "manifest_version": "0.3",
+  "name": "google-searchconsole-mcp",
+  "display_name": "Google Search Console",
+  "version": "1.0.0",
+  "description": "Connect Google Search Console to Claude — query search analytics, inspect URLs, find keyword opportunities, and track SEO performance.",
+  "author": {
+    "name": "Aashish",
+    "url": "https://github.com/lionkiii"
+  },
+  "license": "MIT",
+  "icon": "icon.png",
+  "server": {
+    "type": "node",
+    "entry_point": "dist/index.js",
+    "mcp_config": {
+      "command": "npx",
+      "args": ["-y", "google-searchconsole-mcp"]
+    }
+  },
+  "tools": [
+    {
+      "name": "list_accounts",
+      "description": "List all authenticated Google accounts and their associated GSC sites"
+    },
+    {
+      "name": "list_sites",
+      "description": "List all sites you have access to in Google Search Console"
+    },
+    {
+      "name": "query_search_analytics",
+      "description": "Query search analytics data — clicks, impressions, CTR, and position by dimension"
+    },
+    {
+      "name": "inspect_url",
+      "description": "Check URL indexing status, mobile usability, and rich results"
+    },
+    {
+      "name": "list_sitemaps",
+      "description": "List all submitted sitemaps and their status"
+    },
+    {
+      "name": "find_keyword_opportunities",
+      "description": "Find high-impression, low-CTR keywords — quick SEO wins"
+    },
+    {
+      "name": "get_top_pages",
+      "description": "Get top pages sorted by clicks, impressions, CTR, or position"
+    },
+    {
+      "name": "compare_performance",
+      "description": "Compare search performance between two time periods"
+    },
+    {
+      "name": "analyze_brand_queries",
+      "description": "Analyze brand vs non-brand organic traffic split"
+    },
+    {
+      "name": "get_keyword_trend",
+      "description": "Get daily trend data for a specific keyword"
+    },
+    {
+      "name": "export_analytics",
+      "description": "Export search analytics as CSV or JSON"
+    },
+    {
+      "name": "query_by_search_appearance",
+      "description": "Filter by search appearance type (AMP, FAQ, Rich Results, etc.)"
+    },
+    {
+      "name": "query_by_search_type",
+      "description": "Filter by search type: web, image, video, news, or discover"
+    }
+  ],
+  "privacy_policies": [
+    "https://github.com/lionkiii/google-searchconsole-mcp/blob/main/PRIVACY.md"
+  ],
+  "compatibility": {
+    "platforms": ["darwin", "win32", "linux"],
+    "runtimes": {
+      "node": ">=18.0.0"
+    }
+  }
+}

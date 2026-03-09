@@ -83,6 +83,44 @@ npx google-searchconsole-mcp
 | `query_by_search_appearance` | Filter results by search appearance: AMP, FAQ, HowTo, Rich Results, Video, etc. |
 | `query_by_search_type` | Filter by search type: web, image, video, news, or discover |
 
+## Examples
+
+### Example 1: Find your top performing pages
+
+**User prompt:** "Show me my top 10 pages by clicks for the last 30 days"
+
+**Expected behavior:**
+- Calls `get_top_pages` with your site URL, date range of last 30 days, `sortBy: "clicks"`, and `limit: 10`
+- Returns a ranked list of your top 10 pages with clicks, impressions, CTR, and average position for each
+- Helps identify your strongest content and highest-traffic landing pages
+
+### Example 2: Discover keyword optimization opportunities
+
+**User prompt:** "Find keywords where I have high impressions but low CTR on example.com"
+
+**Expected behavior:**
+- Calls `find_keyword_opportunities` with your site URL and a 28-day date range
+- Filters for queries with 100+ impressions and less than 3% CTR within the top 20 positions
+- Returns a list of keywords where better titles, meta descriptions, or content could significantly increase clicks
+
+### Example 3: Check if a URL is indexed by Google
+
+**User prompt:** "Check if https://example.com/blog/my-new-post is indexed"
+
+**Expected behavior:**
+- Calls `inspect_url` with the site property and the full URL to inspect
+- Returns indexing status (indexed, crawled but not indexed, not found, etc.), last crawl date, mobile usability status, and any rich results detected
+- Identifies issues preventing indexing such as robots.txt blocks, noindex tags, or crawl errors
+
+### Example 4: Compare this month vs last month
+
+**User prompt:** "Compare my search performance this month vs last month for example.com"
+
+**Expected behavior:**
+- Calls `compare_performance` with current and previous month date ranges
+- Returns queries that gained or lost the most clicks, with delta values for clicks, impressions, CTR, and position
+- Highlights trending keywords and declining pages to prioritize optimization efforts
+
 ## Use Cases
 
 - **SEO Performance Monitoring** — Track clicks, impressions, CTR, and average position over time
@@ -139,6 +177,12 @@ Save your OAuth credentials JSON to `~/.gsc-mcp/credentials.json`
 - [Model Context Protocol](https://modelcontextprotocol.io) — The open standard for AI-tool integration
 - [Claude Desktop](https://claude.ai/download) — Anthropic's desktop AI assistant
 - [MCP Server Registry](https://github.com/punkpeye/awesome-mcp-servers) — Curated list of MCP servers
+
+## Privacy Policy
+
+See [PRIVACY.md](./PRIVACY.md) for our complete privacy policy.
+
+**TL;DR:** This extension runs locally on your machine. OAuth tokens are stored locally in `~/.gsc-mcp/`, and all Search Console data is queried directly from Google's API without passing through any intermediary. No data is collected, stored, or transmitted to any third party by this MCP server.
 
 ## License
 
