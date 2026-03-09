@@ -1,6 +1,6 @@
 {
   "name": "google-searchconsole-mcp",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "MCP server for Google Search Console - query search analytics, inspect URLs, analyze keywords, and more",
   "main": "dist/index.js",
   "type": "module",
