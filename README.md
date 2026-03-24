@@ -7,6 +7,8 @@ A [Model Context Protocol (MCP)](https://modelcontextprotocol.io) server that co
 
 > **No Google Cloud setup required.** Install, authenticate with your Google account, and start querying your Search Console data in under 2 minutes.
 
+[![google-search-console-mcp MCP server](https://glama.ai/mcp/servers/lionkiii/google-searchconsole-mcp/badges/card.svg)](https://glama.ai/mcp/servers/lionkiii/google-searchconsole-mcp)
+
 ## What Can You Do?
 
 Ask Claude questions like:
