@@ -13,7 +13,9 @@
     "README.md",
     "LICENSE",
     "PRIVACY.md",
-    "manifest.json"
+    "SECURITY.md",
+    "manifest.json",
+    "glama.json"
   ],
   "scripts": {
     "build": "tsc",

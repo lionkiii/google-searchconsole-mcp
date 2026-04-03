@@ -1,0 +1,7 @@
+node_modules
+dist
+.git
+.DS_Store
+*.mcpb
+claude-seo-skills
+credentials.json
