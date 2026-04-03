@@ -2,6 +2,7 @@
 
 [![npm version](https://img.shields.io/npm/v/google-searchconsole-mcp)](https://www.npmjs.com/package/google-searchconsole-mcp)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![google-searchconsole-mcp MCP server](https://glama.ai/mcp/servers/lionkiii/google-searchconsole-mcp/badges/score.svg)](https://glama.ai/mcp/servers/lionkiii/google-searchconsole-mcp)
 
 A [Model Context Protocol (MCP)](https://modelcontextprotocol.io) server that connects **Google Search Console** to AI assistants like **Claude Desktop**, **Cursor**, **Windsurf**, and any MCP-compatible client. Analyze your SEO data, inspect URLs, find keyword opportunities, and track search performance — all through natural language.
 
