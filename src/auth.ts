@@ -12,10 +12,30 @@ const LEGACY_TOKENS_DIR = path.join(HOME_DIR, ".gsc-mcp-tokens");
 const TOKENS_DIR = path.join(CONFIG_DIR, "tokens");
 const CREDENTIALS_PATH = path.join(CONFIG_DIR, "credentials.json");
 
-const SCOPES = [
+/**
+ * Default OAuth scopes — read-only access to Search Console data.
+ * Sufficient for analytics, indexing inspection, sitemap inspection.
+ */
+const READONLY_SCOPES = [
   "https://www.googleapis.com/auth/webmasters.readonly",
   "https://www.googleapis.com/auth/userinfo.email",
 ];
+
+/**
+ * Full OAuth scopes — read + write access to Search Console.
+ * Required to add sites, verify ownership, submit/delete sitemaps.
+ * Opt-in via `gsc-mcp-auth --full-scope`.
+ */
+const FULL_SCOPES = [
+  "https://www.googleapis.com/auth/webmasters",
+  "https://www.googleapis.com/auth/userinfo.email",
+];
+
+/**
+ * Default scope set (read-only). Kept as `SCOPES` for backward compatibility
+ * with downstream code that imports it directly.
+ */
+const SCOPES = READONLY_SCOPES;
 
 interface Credentials {
   installed: {
@@ -338,4 +358,12 @@ async function getNewToken(oAuth2Client: OAuth2Client): Promise<OAuth2Client> {
 }
 
 // Re-export for external use
-export { SCOPES, CREDENTIALS_PATH, CONFIG_DIR, TOKENS_DIR, LEGACY_TOKEN_PATH };
+export {
+  SCOPES,
+  READONLY_SCOPES,
+  FULL_SCOPES,
+  CREDENTIALS_PATH,
+  CONFIG_DIR,
+  TOKENS_DIR,
+  LEGACY_TOKEN_PATH,
+};

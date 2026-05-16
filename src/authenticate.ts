@@ -5,7 +5,8 @@ import * as fs from "fs";
 import * as http from "http";
 import open from "open";
 import {
-  SCOPES,
+  READONLY_SCOPES,
+  FULL_SCOPES,
   TOKENS_DIR,
   listAccounts,
   saveTokenForAccount,
@@ -14,10 +15,11 @@ import {
   AccountTokenInfo,
 } from "./auth.js";
 
-function parseArgs(): { alias: string; list: boolean } {
+function parseArgs(): { alias: string; list: boolean; fullScope: boolean } {
   const args = process.argv.slice(2);
   let alias = "default";
   let list = false;
+  let fullScope = false;
 
   for (let i = 0; i < args.length; i++) {
     if (args[i] === "--alias" && i + 1 < args.length) {
@@ -25,10 +27,15 @@ function parseArgs(): { alias: string; list: boolean } {
       i++;
     } else if (args[i] === "--list") {
       list = true;
+    } else if (args[i] === "--full-scope") {
+      // Opt-in to read + write access (webmasters scope, not webmasters.readonly).
+      // Needed for autonomous tooling that adds sites, verifies ownership,
+      // or submits sitemaps without further human intervention.
+      fullScope = true;
     }
   }
 
-  return { alias, list };
+  return { alias, list, fullScope };
 }
 
 async function fetchEmail(
@@ -47,7 +54,8 @@ async function authenticate() {
   // Ensure migration happens first
   migrateLegacyToken();
 
-  const { alias, list } = parseArgs();
+  const { alias, list, fullScope } = parseArgs();
+  const scopes = fullScope ? FULL_SCOPES : READONLY_SCOPES;
 
   if (list) {
     const accounts = listAccounts();
@@ -62,7 +70,10 @@ async function authenticate() {
     process.exit(0);
   }
 
-  console.log(`Starting Google Search Console authentication for account: "${alias}"...\n`);
+  console.log(`Starting Google Search Console authentication for account: "${alias}"...`);
+  console.log(
+    `Scope: ${fullScope ? "FULL (read + write — can manage sites, sitemaps, verification)" : "READ-ONLY (analytics + inspection)"}\n`
+  );
 
   // Ensure tokens directory exists
   if (!fs.existsSync(TOKENS_DIR)) {
@@ -91,15 +102,29 @@ async function authenticate() {
       );
       oAuth2Client.setCredentials(fileData.tokens);
 
-      // Test the connection
-      const searchConsole = google.searchconsole({ version: "v1", auth: oAuth2Client });
-      await searchConsole.sites.list();
+      // If the user requested --full-scope but the stored token was issued
+      // with only webmasters.readonly, force re-authentication so the new
+      // scope is granted by Google.
+      const storedScope = fileData.tokens?.scope || "";
+      const storedHasWrite =
+        storedScope.includes("https://www.googleapis.com/auth/webmasters") &&
+        !storedScope.includes("webmasters.readonly");
+      if (fullScope && !storedHasWrite) {
+        console.log(
+          "Existing tokens are read-only; --full-scope requires re-authentication to grant write access.\n"
+        );
+        fs.unlinkSync(tokenPath);
+      } else {
+        // Test the connection
+        const searchConsole = google.searchconsole({ version: "v1", auth: oAuth2Client });
+        await searchConsole.sites.list();
 
-      console.log(`Authentication is valid for "${alias}"! You can use the MCP server.`);
-      process.exit(0);
+        console.log(`Authentication is valid for "${alias}"! You can use the MCP server.`);
+        process.exit(0);
+      }
     } catch (error) {
       console.log("Existing tokens are invalid. Re-authenticating...\n");
-      fs.unlinkSync(tokenPath);
+      if (fs.existsSync(tokenPath)) fs.unlinkSync(tokenPath);
     }
   }
 
@@ -113,7 +138,7 @@ async function authenticate() {
 
   const authUrl = oAuth2Client.generateAuthUrl({
     access_type: "offline",
-    scope: SCOPES,
+    scope: scopes,
     prompt: "consent",
   });
 

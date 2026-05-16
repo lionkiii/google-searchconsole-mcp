@@ -41,6 +41,18 @@ gsc-mcp-auth --alias personal
 gsc-mcp-auth --list
 ```
 
+**Read + write access (opt-in):**
+
+By default, the MCP requests **read-only** access — safe for analytics, inspection, and reporting. If you want the assistant to also be able to **add sites, verify ownership, submit sitemaps, or delete sitemaps** on your behalf, pass `--full-scope`:
+
+```bash
+gsc-mcp-auth --full-scope
+# or per-alias
+gsc-mcp-auth --alias work --full-scope
+```
+
+Google's consent screen will then ask for the full `webmasters` scope instead of `webmasters.readonly`. Useful for autonomous tooling (CI pipelines, agent workflows like Claude managing a project's GSC end-to-end) where prompting the user to click through the GSC web UI on each new property defeats the purpose. Re-run with `--full-scope` on an existing alias to upgrade it; the CLI will detect the read-only token and force re-authentication.
+
 ### 3. Add to Claude Desktop
 
 Add to your Claude Desktop config (`~/Library/Application Support/Claude/claude_desktop_config.json` on macOS):
@@ -138,7 +150,7 @@ This package ships with built-in OAuth credentials — you don't need to create 
 
 1. Your browser opens Google's login page
 2. You log in with **your** Google account
-3. You grant read-only access to **your** Search Console data
+3. You grant read-only access to **your** Search Console data (or read + write, if you pass `--full-scope`)
 4. Tokens are saved locally on your machine (`~/.gsc-mcp/tokens/`)
 
 **Your data never leaves your machine.** The OAuth credentials just identify the app — each user authenticates separately and can only access their own Search Console data.
